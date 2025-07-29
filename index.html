@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YOCTO Wallet Prototype</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #001f3f, #0074D9);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .subtext {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+    .wallet-container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .drop-time {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+    }
+    .claim-button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      font-size: 1.2rem;
+      background-color: #FFDC00;
+      border: none;
+      color: #001f3f;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .yocto-balance {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">YOCTO Wallet</div>
+    <div class="subtext">Time Is Honesty</div>
+  </header>  <div class="wallet-container">
+    <div id="drop-time" class="drop-time">Checking next drop...</div>
+    <button class="claim-button" onclick="claimDrop()">Claim Drop</button>
+    <div class="yocto-balance" id="yoctoBalance">Balance: 0 YOCTO</div>
+  </div>  <script>
+    let balance = 0;
+
+    function updateDropTime() {
+      const now = new Date();
+      const hour = now.getHours();
+      const dropWindow = [9, 12, 15, 18, 21]; // Waktu drop dalam jam WIB
+      const dropAvailable = dropWindow.includes(hour);
+
+      document.getElementById('drop-time').textContent = dropAvailable
+        ? '✅ Drop is active now — You can claim!'
+        : '❌ Drop inactive — Try again at 09:00 / 12:00 / 15:00 / 18:00 / 21:00 WIB';
+    }
+
+    function claimDrop() {
+      const now = new Date();
+      const hour = now.getHours();
+      const dropWindow = [9, 12, 15, 18, 21];
+
+      if (dropWindow.includes(hour)) {
+        balance += 1;
+        document.getElementById('yoctoBalance').textContent = `Balance: ${balance} YOCTO`;
+        alert('🎉 You claimed 1 YOCTO!');
+      } else {
+        alert('❌ Drop is not active now. Come back later.');
+      }
+    }
+
+    updateDropTime();
+    setInterval(updateDropTime, 60000); // Update tiap menit
+  </script></body>
+</html>
